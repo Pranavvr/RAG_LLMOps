@@ -1,4 +1,50 @@
-.env
-.venv
+# .env
+# .venv
 
+# data/
+
+# __pycache__/
+# .ipynb_checkpoints/
+
+
+# Secrets
+.env
+
+# Python virtualenv
+.venv/
+
+# Data & artifacts
 data/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Test artifacts
+.coverage
+htmlcov/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Scratch / misc
+Other/

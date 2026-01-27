@@ -1,22 +1,132 @@
 fastapi==0.115.0
 uvicorn[standard]==0.30.6
-pydantic==2.9.2
-streamlit==1.39.0
-
-langchain==0.3.4
-langchain-core==0.3.12
-langchain-community==0.3.3
-langchain-text-splitters==0.3.0
-langgraph==0.2.35
-
-chromadb==0.5.5
-sentence-transformers==3.1.1
-pypdf==4.3.1
-
+pydantic>=2.9.2
 python-dotenv==1.0.1
+
 requests>=2.32
 numpy>=1.26
 pandas>=2.2.2
+pyarrow>=16.1.0
+
+# Switch to modern versioning
+langchain>=0.3.0
+langchain-community>=0.3.0
+langchain-openai>=0.3.0
+langgraph>=1.0.0
+chromadb==0.5.5
+
+yfinance>=0.2.43
+tavily-python>=0.3.7
+finnhub-python>=2.4.20
+
+
+
+
+
+# # Web & Core
+# fastapi==0.115.0
+# uvicorn[standard]==0.30.6
+# pydantic>=2.9.2
+# python-dotenv==1.0.1
+
+# # Data
+# requests>=2.32
+# numpy>=1.26
+# pandas>=2.2.2
+# pyarrow>=16.1.0
+
+# # The LangChain Stack (Relaxed Patch Versions)
+# langchain~=0.3.0
+# langchain-core~=0.3.0
+# langchain-community~=0.3.0
+# langchain-text-splitters~=0.3.0
+# langgraph>=0.2.35
+# langchain-openai>=0.2.6
+# openai>=1.52.0
+
+# # Vector DB
+# chromadb==0.5.5
+
+# # Tools
+# yfinance>=0.2.43
+# tavily-python>=0.3.7
+# finnhub-python>=2.4.20
+
+
+
+
+
+
+
+
+
+
+
+
+
+# fastapi==0.115.0
+# uvicorn[standard]==0.30.6
+# pydantic==2.9.2
+# python-dotenv==1.0.1
+
+# requests>=2.32
+# numpy>=1.26
+# pandas>=2.2.2
+# pyarrow>=16.1.0
+
+# langchain==0.3.4
+# langchain-core==0.3.12
+# langchain-community==0.3.3
+# langchain-text-splitters==0.3.0
+# langgraph==0.2.35
+# langchain-openai>=0.2.6
+# openai>=1.52.0
+
+# chromadb==0.5.5
+
+# yfinance>=0.2.43
+# tavily-python>=0.3.7
+# finnhub-python>=2.4.20
+
+
+
+
+
+
+
+
+
+
+# fastapi==0.115.0
+# uvicorn[standard]==0.30.6
+# pydantic==2.9.2
+# streamlit==1.39.0
+# pymupdf==1.26.7
+
+# langchain==0.3.4
+# langchain-core==0.3.12
+# langchain-openai==1.1.6
+# langchain-community==0.3.3
+# langchain-text-splitters==0.3.0
+# langgraph==0.2.35
+
+# chromadb==0.5.5
+# sentence-transformers==3.1.1
+# pypdf==4.3.1
+
+# python-dotenv==1.0.1
+# requests>=2.32
+# numpy>=1.26
+# pandas>=2.2.2
+
+# yfinance>=0.2.43
+# tavily-python>=0.3.7
+# finnhub-python>=2.4.20
+
+
+
+
+
 
 
 # # --- LangChain & LangGraph ---
