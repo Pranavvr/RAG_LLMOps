@@ -12,6 +12,7 @@
 
 # Python virtualenv
 .venv/
+.venv311
 
 # Data & artifacts
 data/
