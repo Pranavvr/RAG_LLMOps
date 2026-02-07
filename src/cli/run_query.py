@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import sys
-from src.agent.graph import run_agent
+from agent.graph import run_agent
 
 
 def main() -> None:

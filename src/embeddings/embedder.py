@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from langchain_openai import OpenAIEmbeddings
-from src.config.settings import settings
+from config.settings import settings
 
 
 def get_openai_embedder() -> OpenAIEmbeddings:

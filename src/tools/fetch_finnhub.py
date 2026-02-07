@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import List, Any, Dict
 
-from src.config.settings import settings
-from src.utils.helpers import http_get_json, sleep_seconds
+from config.settings import settings
+from utils.helpers import http_get_json, sleep_seconds
 
-from src.data_access.finnhub_store import FinnhubStore
+from data_access.finnhub_store import FinnhubStore
 
 _store = FinnhubStore()
 

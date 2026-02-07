@@ -16,8 +16,8 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
-from src.api.schemas import AskRequest, AskResponse
-from src.agent.graph import run_agent
+from api.schemas import AskRequest, AskResponse
+from agent.graph import run_agent
 
 router = APIRouter()
 

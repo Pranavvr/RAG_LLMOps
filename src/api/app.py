@@ -15,8 +15,8 @@ from __future__ import annotations
 
 from fastapi import FastAPI
 
-from src.config.logging import setup_logging
-from src.api.routes import router
+from config.logging import setup_logging
+from api.routes import router
 
 setup_logging()
 
