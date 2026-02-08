@@ -19,7 +19,7 @@ yfinance>=0.2.43
 tavily-python>=0.3.7
 finnhub-python>=2.4.20
 
-
+pytest
 
 
 

@@ -5,9 +5,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List
 
-from src.config.settings import settings
-from src.utils.helpers import write_json
-from src.utils.s3 import upload_file
+from config.settings import settings
+from utils.helpers import write_json
+from utils.s3 import upload_file
 
 
 def _fetch_tavily_for_ticker(ticker: str) -> List[Dict[str, Any]]:

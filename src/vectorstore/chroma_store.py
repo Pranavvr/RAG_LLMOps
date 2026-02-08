@@ -119,8 +119,8 @@ from typing import List, Dict, Any, Optional
 
 from langchain_community.vectorstores import Chroma
 
-from src.config.settings import settings
-from src.embeddings.embedder import get_openai_embedder
+from config.settings import settings
+from embeddings.embedder import get_openai_embedder
 
 # _settings = get_settings()
 

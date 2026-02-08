@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import Any, Dict, Callable, List, Optional
 
-from src.config.settings import settings
-from src.data_access.snapshot_manager import SnapshotManager
+from config.settings import settings
+from data_access.snapshot_manager import SnapshotManager
 # from src.tools.fetch_news import search_news
 
 # _settings = get_settings()

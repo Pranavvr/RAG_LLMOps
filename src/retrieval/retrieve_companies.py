@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from typing import Any, Dict, List
-from src.config.settings import settings
-from src.vectorstore.chroma_store import get_vectorstore
+from config.settings import settings
+from vectorstore.chroma_store import get_vectorstore
 
 
 # def retrieve_companies(query: str, k: int | None = None) -> List[Dict[str, Any]]:
