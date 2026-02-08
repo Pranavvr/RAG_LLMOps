@@ -1,0 +1,12 @@
+FROM python:3.11-slim 
+WORKDIR /app 
+COPY requirements.lock.txt /app/requirements.lock.txt 
+RUN pip install --no-cache-dir -r /app/requirements.lock.txt 
+
+COPY pyproject.toml /app/pyproject.toml 
+COPY src /app/src 
+RUN pip install --no-cache-dir . 
+
+EXPOSE 8000 
+
+CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8000"]
