@@ -51,8 +51,8 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Callable
 
-from src.config.settings import settings
-from src.data_access.snapshot_manager import SnapshotManager
+from config.settings import settings
+from data_access.snapshot_manager import SnapshotManager
 
 LiveFetchFn = Callable[[List[str]], Dict[str, Any]]
 

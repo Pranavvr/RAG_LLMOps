@@ -25,10 +25,10 @@ from __future__ import annotations
 import logging
 import pandas as pd
 from pathlib import Path
-from src.config.settings import settings
-from src.embeddings.company_cards import build_company_cards
-from src.vectorstore.chroma_store import build_chroma_from_company_cards
-from src.embeddings.company_cards import write_company_cards_json
+from config.settings import settings
+from embeddings.company_cards import build_company_cards
+from vectorstore.chroma_store import build_chroma_from_company_cards
+from embeddings.company_cards import write_company_cards_json
 
 
 # _settings = get_settings()

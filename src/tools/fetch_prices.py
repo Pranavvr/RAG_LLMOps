@@ -53,7 +53,7 @@ from typing import Optional
 
 import yfinance as yf
 
-from src.utils.cache import get_cached_symbol, set_cached_symbol
+from utils.cache import get_cached_symbol, set_cached_symbol
 
 
 def is_probably_valid_symbol(sym: Optional[str]) -> bool:

@@ -15,7 +15,7 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 from langchain_openai import ChatOpenAI
 
-from src.config.settings import settings
+from config.settings import settings
 
 # _settings = get_settings()
 

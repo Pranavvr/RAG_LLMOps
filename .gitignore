@@ -11,7 +11,7 @@
 .env
 
 # Python virtualenv
-.venv/
+.venv*/
 
 # Data & artifacts
 data/
@@ -21,6 +21,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.pytest_cache/
 
 # Jupyter
 .ipynb_checkpoints/

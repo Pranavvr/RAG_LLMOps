@@ -79,7 +79,7 @@ import json
 from pathlib import Path
 from typing import Dict, Optional
 
-from src.config.settings import settings
+from config.settings import settings
 
 _CACHE_PATH = Path(settings.SYMBOL_CACHE_PATH)
 _symbol_map: Dict[str, str] = {}

@@ -49,8 +49,8 @@ from typing import Dict, Any, List, Optional
 
 from tavily import TavilyClient
 
-from src.config.settings import settings
-from src.data_access.news_store import NewsStore
+from config.settings import settings
+from data_access.news_store import NewsStore
 
 # _settings = settings()
 _tavily: Optional[TavilyClient] = None
