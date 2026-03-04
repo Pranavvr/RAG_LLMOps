@@ -1,11 +1,129 @@
-FROM apache/airflow:2.9.3-python3.11 
-USER root WORKDIR /opt/airflow 
-COPY requirements.lock.txt /opt/airflow/requirements.lock.txt 
-RUN pip install --no-cache-dir -r /opt/airflow/requirements.lock.txt # add this COPY pyproject.toml /opt/airflow/pyproject.toml 
+# FROM apache/airflow:2.9.3-python3.11 
+# USER root WORKDIR /opt/airflow 
+# COPY requirements.lock.txt /opt/airflow/requirements.lock.txt 
+# RUN pip install --no-cache-dir -r /opt/airflow/requirements.lock.txt # add this 
+# COPY pyproject.toml /opt/airflow/pyproject.toml 
 
-COPY airflow/dags /opt/airflow/dags 
-COPY src /opt/airflow/src 
-RUN pip install --no-cache-dir . 
-# ENV PYTHONPATH=/opt/airflow 
+# COPY airflow/dags /opt/airflow/dags 
+# COPY src /opt/airflow/src 
+# RUN pip install --no-cache-dir . 
+# # ENV PYTHONPATH=/opt/airflow 
+
+# USER airflow
+
+
+# FROM apache/airflow:2.9.3-python3.11
+
+# USER root
+# WORKDIR /opt/airflow
+
+# COPY requirements.txt /opt/airflow/requirements.txt
+# RUN pip install --no-cache-dir -r /opt/airflow/requirements.txt
+
+# COPY src /opt/airflow/src
+# COPY pyproject.toml /opt/airflow/pyproject.toml
+
+# RUN pip install --no-cache-dir -e /opt/airflow
+
+# COPY airflow/dags /opt/airflow/dags
+# COPY .env /opt/airflow/.env
+
+# ENV PYTHONPATH=/opt/airflow
+
+# USER airflow
+
+
+
+# FROM apache/airflow:2.9.3-python3.11
+
+# USER root
+# WORKDIR /opt/airflow
+
+# # install python deps first for caching
+# COPY requirements.lock.txt /opt/airflow/requirements.lock.txt
+# RUN pip install --no-cache-dir -r /opt/airflow/requirements.lock.txt
+
+# # install your package from pyproject.toml
+# COPY pyproject.toml /opt/airflow/pyproject.toml
+# COPY src /opt/airflow/src
+# RUN pip install --no-cache-dir /opt/airflow
+
+# # copy dags
+# COPY airflow/dags /opt/airflow/dags
+
+# # optional: airflow expects this
+# ENV AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/dags
+
+# USER airflow
+
+
+
+# FROM apache/airflow:2.9.3-python3.11
+
+# WORKDIR /opt/airflow
+
+# # Copy dependency file
+# COPY requirements.lock.txt /opt/airflow/requirements.lock.txt
+
+# # Switch to airflow user BEFORE pip install
+# USER airflow
+# RUN pip install --no-cache-dir -r /opt/airflow/requirements.lock.txt
+
+# # Copy project files
+# COPY --chown=airflow:root pyproject.toml /opt/airflow/pyproject.toml
+# COPY --chown=airflow:root src /opt/airflow/src
+
+# # Install your project package
+# RUN pip install --no-cache-dir /opt/airflow
+
+# # Copy DAGs
+# COPY --chown=airflow:root airflow/dags /opt/airflow/dags
+
+# ENV AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/dags
+
+
+
+# FROM apache/airflow:2.9.3-python3.11
+
+# WORKDIR /opt/airflow
+
+# COPY requirements.lock.txt /opt/airflow/requirements.lock.txt
+
+# USER airflow
+
+# ARG AIRFLOW_VERSION=2.9.3
+# ARG PYTHON_VERSION=3.11
+# ARG CONSTRAINT_URL=https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt
+
+# RUN pip install --no-cache-dir -r /opt/airflow/requirements.lock.txt --constraint "${CONSTRAINT_URL}"
+
+# COPY --chown=airflow:root pyproject.toml /opt/airflow/pyproject.toml
+# COPY --chown=airflow:root src /opt/airflow/src
+# RUN pip install --no-cache-dir /opt/airflow --constraint "${CONSTRAINT_URL}"
+
+# COPY --chown=airflow:root airflow/dags /opt/airflow/dags
+# ENV AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/dags
+
+
+
+
+FROM apache/airflow:2.9.3-python3.11
+
+WORKDIR /opt/airflow
+
+COPY airflow/requirements.airflow.txt /opt/airflow/requirements.airflow.txt
 
 USER airflow
+
+ARG AIRFLOW_VERSION=2.9.3
+ARG PYTHON_VERSION=3.11
+ARG CONSTRAINT_URL=https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt
+
+RUN pip install --no-cache-dir -r /opt/airflow/requirements.airflow.txt --constraint "${CONSTRAINT_URL}"
+
+COPY --chown=airflow:root pyproject.toml /opt/airflow/pyproject.toml
+COPY --chown=airflow:root src /opt/airflow/src
+RUN pip install --no-cache-dir /opt/airflow --constraint "${CONSTRAINT_URL}"
+
+COPY --chown=airflow:root airflow/dags /opt/airflow/dags
+ENV AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/dags

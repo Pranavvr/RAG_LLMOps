@@ -1,0 +1,13 @@
+# only what your pipelines need
+pandas
+pyarrow
+chromadb
+openai
+tavily-python
+finnhub-python
+yfinance
+python-dotenv
+langchain
+langchain-community
+langchain-core
+langchain-openai
