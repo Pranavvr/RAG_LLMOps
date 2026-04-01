@@ -111,6 +111,70 @@
 
 
 
+# from __future__ import annotations
+
+# import shutil
+# from pathlib import Path
+# from typing import List, Dict, Any, Optional
+
+# from langchain_community.vectorstores import Chroma
+
+# from config.settings import settings
+# from embeddings.embedder import get_openai_embedder
+
+# # _settings = get_settings()
+
+# _VECTORSTORE: Optional[Chroma] = None
+
+
+# def build_chroma_from_company_cards(
+#     texts: List[str],
+#     metadatas: List[Dict[str, Any]],
+#     chroma_dir: Path,
+#     collection_name: str = "company_cards",
+#     rebuild: bool = False,
+# ) -> Chroma:
+#     chroma_dir = Path(chroma_dir)
+#     chroma_dir.mkdir(parents=True, exist_ok=True)
+
+#     if rebuild and chroma_dir.exists():
+#         shutil.rmtree(chroma_dir)
+#         chroma_dir.mkdir(parents=True, exist_ok=True)
+
+#     emb = get_openai_embedder()
+
+#     vs = Chroma(
+#         collection_name=collection_name,
+#         persist_directory=str(chroma_dir),
+#         embedding_function=emb,
+#     )
+
+#     if texts:
+#         ids = [f"company::{(m.get('company') or '').strip()}" for m in metadatas]
+#         vs.add_texts(texts=texts, metadatas=metadatas, ids=ids)
+
+#     vs.persist()
+#     return vs
+
+
+# def get_vectorstore() -> Chroma:
+#     global _VECTORSTORE
+#     if _VECTORSTORE is None:
+#         _VECTORSTORE = build_chroma_from_company_cards(
+#             texts=[],
+#             metadatas=[],
+#             chroma_dir=settings.CHROMA_PERSIST_DIR,
+#             collection_name="company_cards",
+#             rebuild=False,
+#         )
+#     return _VECTORSTORE
+
+
+
+
+
+
+
 from __future__ import annotations
 
 import shutil
@@ -122,8 +186,6 @@ from langchain_community.vectorstores import Chroma
 from config.settings import settings
 from embeddings.embedder import get_openai_embedder
 
-# _settings = get_settings()
-
 _VECTORSTORE: Optional[Chroma] = None
 
 
@@ -134,10 +196,16 @@ def build_chroma_from_company_cards(
     collection_name: str = "company_cards",
     rebuild: bool = False,
 ) -> Chroma:
+    print("BUILD CHROMA START")
+    print("num_texts =", len(texts))
+    print("num_metadatas =", len(metadatas))
+    print("chroma_dir =", chroma_dir)
+
     chroma_dir = Path(chroma_dir)
     chroma_dir.mkdir(parents=True, exist_ok=True)
 
     if rebuild and chroma_dir.exists():
+        print("Deleting old chroma directory")
         shutil.rmtree(chroma_dir)
         chroma_dir.mkdir(parents=True, exist_ok=True)
 
@@ -149,22 +217,27 @@ def build_chroma_from_company_cards(
         embedding_function=emb,
     )
 
+    print("Existing docs in collection =", vs._collection.count())
+
     if texts:
         ids = [f"company::{(m.get('company') or '').strip()}" for m in metadatas]
+        print("Adding texts now...")
         vs.add_texts(texts=texts, metadatas=metadatas, ids=ids)
+        print("Finished adding texts")
 
-    vs.persist()
+    print("BUILD CHROMA END")
     return vs
 
 
-def get_vectorstore() -> Chroma:
+def get_vectorstore():
     global _VECTORSTORE
+    print("get_vectorstore called. Cached =", _VECTORSTORE is not None)
+
     if _VECTORSTORE is None:
-        _VECTORSTORE = build_chroma_from_company_cards(
-            texts=[],
+        print("Building vectorstore for first time")
+        _VECTORSTORE = build_chroma_from_company_cards(texts=[],
             metadatas=[],
-            chroma_dir=settings.CHROMA_PERSIST_DIR,
+            chroma_dir=Path(settings.CHROMA_PERSIST_DIR),
             collection_name="company_cards",
-            rebuild=False,
-        )
+            rebuild=False,)
     return _VECTORSTORE

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import os
-
+from pathlib import Path
 from config.settings import settings
 from data_access.snapshot_manager import SnapshotManager
 from tools.fetch_market_bundle import _fetch_market_live
@@ -17,7 +17,7 @@ def run_market_snapshot(ds: str | None = None) -> None:
 
     payload = _fetch_market_live(tickers)
 
-    sm = SnapshotManager(settings.FINNHUB_SNAPSHOT_DIR)
+    sm = SnapshotManager(Path(settings.MARKET_SNAPSHOT_DIR))
     sm.write_latest(source="scheduled", payload=payload)
 
     print("Market snapshot refreshed")

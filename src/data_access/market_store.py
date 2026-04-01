@@ -55,7 +55,7 @@
 from __future__ import annotations
 
 from typing import Any, Dict, List, Callable
-
+from pathlib import Path
 from config.settings import settings
 from data_access.snapshot_manager import SnapshotManager
 
@@ -64,7 +64,7 @@ LiveFetchFn = Callable[[List[str]], Dict[str, Any]]
 
 class MarketStore:
     def __init__(self):
-        self.snapshots = SnapshotManager(settings.MARKET_SNAPSHOT_DIR)
+        self.snapshots = SnapshotManager(Path(settings.MARKET_SNAPSHOT_DIR))
 
     def get_market_bundle(
         self,
