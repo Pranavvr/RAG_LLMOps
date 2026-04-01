@@ -1,83 +1,238 @@
-# version: "3.8"
+# # version: "3.8"
+
+# # services:
+# #   postgres:
+# #     image: postgres:15
+# #     environment:
+# #       POSTGRES_USER: airflow
+#   #     POSTGRES_PASSWORD: airflow
+#   #     POSTGRES_DB: airflow
+#   #   ports:
+#   #     - "5433:5432"
+
+#   # airflow-webserver:
+#   #   build:
+#   #     context: ..
+#   #     dockerfile: docker/Dockerfile.airflow
+#   #   depends_on:
+#   #     - postgres
+#   #   environment:
+#   #     AIRFLOW__CORE__EXECUTOR: LocalExecutor
+#   #     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+#   #     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+#   #   volumes:
+#   #     - ../data:/opt/airflow/data
+#   #   ports:
+#   #     - "8080:8080"
+#   #   # command: >
+#   #   #   bash -c "
+#   #   #   airflow db migrate &&
+#   #   #   airflow users create
+#   #   #     --username admin
+#   #   #     --firstname admin
+#   #   #     --lastname admin
+#   #   #     --role Admin
+#   #   #     --email admin@example.com
+#   #   #     --password admin || true &&
+#   #   #   airflow webserver
+#   #     # "
+#   #   command: >
+#   #     bash -c "
+#   #     airflow db init &&
+#   #     airflow users create
+#   #       --username admin
+#   #       --firstname admin
+#   #       --lastname admin
+#   #       --role Admin
+#   #       --email admin@example.com
+#   #       --password admin || true
+#   #     &&
+#   #     airflow webserver
+#   #     "
+
+#   # airflow-scheduler:
+#   #   build:
+#   #     context: ..
+#   #     dockerfile: docker/Dockerfile.airflow
+
+#   #   depends_on:
+#   #     - postgres
+#   #   # command: >
+#   #   #   bash -c "
+#   #   #   airflow db check &&
+#   #   #   airflow scheduler
+#   #   #   "
+#   #   # depends_on:
+#   #   #   - airflow-webserver
+#   #   environment:
+#   #     AIRFLOW__CORE__EXECUTOR: LocalExecutor
+#   #     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+#   #     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+#   #   volumes:
+#   #     - ../data:/opt/airflow/data
+
+#   #   command: >
+#   #     bash -c "
+#   #     airflow db check &&
+#   #     airflow scheduler
+#   #     "
+#   #   # command: >
+#   #   #   bash -c "airflow scheduler"
+
+
+
 
 # services:
 #   postgres:
 #     image: postgres:15
 #     environment:
 #       POSTGRES_USER: airflow
-  #     POSTGRES_PASSWORD: airflow
-  #     POSTGRES_DB: airflow
-  #   ports:
-  #     - "5433:5432"
+#       POSTGRES_PASSWORD: airflow
+#       POSTGRES_DB: airflow
+#     ports:
+#       - "5433:5432"
+#     healthcheck:
+#       test: ["CMD-SHELL", "pg_isready -U airflow -d airflow"]
+#       interval: 5s
+#       timeout: 5s
+#       retries: 20
 
-  # airflow-webserver:
-  #   build:
-  #     context: ..
-  #     dockerfile: docker/Dockerfile.airflow
-  #   depends_on:
-  #     - postgres
-  #   environment:
-  #     AIRFLOW__CORE__EXECUTOR: LocalExecutor
-  #     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
-  #     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
-  #   volumes:
-  #     - ../data:/opt/airflow/data
-  #   ports:
-  #     - "8080:8080"
-  #   # command: >
-  #   #   bash -c "
-  #   #   airflow db migrate &&
-  #   #   airflow users create
-  #   #     --username admin
-  #   #     --firstname admin
-  #   #     --lastname admin
-  #   #     --role Admin
-  #   #     --email admin@example.com
-  #   #     --password admin || true &&
-  #   #   airflow webserver
-  #     # "
-  #   command: >
-  #     bash -c "
-  #     airflow db init &&
-  #     airflow users create
-  #       --username admin
-  #       --firstname admin
-  #       --lastname admin
-  #       --role Admin
-  #       --email admin@example.com
-  #       --password admin || true
-  #     &&
-  #     airflow webserver
-  #     "
+#   airflow-webserver:
+#     build:
+#       context: ..
+#       dockerfile: docker/Dockerfile.airflow
+#     depends_on:
+#       postgres:
+#         condition: service_healthy
+#     environment:
+#       AIRFLOW__CORE__EXECUTOR: LocalExecutor
+#       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+#       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+#     volumes:
+#       - ../data:/opt/airflow/data
+#     ports:
+#       - "8080:8080"
+#     # command: >
+#     #   bash -c "
+#     #   airflow db init &&
+#     #   airflow users create
+#     #     --username admin
+#     #     --firstname admin
+#     #     --lastname admin
+#     #     --role Admin
+#     #     --email admin@example.com
+#     #     --password admin || true
+#     #   &&
+#     #   airflow webserver
+#       # "
+#     command: >
+#       bash -c "
+#       airflow db migrate &&
+#       airflow users create --username admin --firstname admin --lastname admin --role Admin --email admin@example.com --password admin || true &&
+#       airflow webserver
+#       "
 
-  # airflow-scheduler:
-  #   build:
-  #     context: ..
-  #     dockerfile: docker/Dockerfile.airflow
+#   airflow-scheduler:
+#     build:
+#       context: ..
+#       dockerfile: docker/Dockerfile.airflow
+#     depends_on:
+#       postgres:
+#         condition: service_healthy
+#     environment:
+#       AIRFLOW__CORE__EXECUTOR: LocalExecutor
+#       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+#       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+#     volumes:
+#       - ../data:/opt/airflow/data
+#     # command: >
+#     #   bash -c "
+#     #   airflow db check &&
+#     #   airflow scheduler
+#     #   "
 
-  #   depends_on:
-  #     - postgres
-  #   # command: >
-  #   #   bash -c "
-  #   #   airflow db check &&
-  #   #   airflow scheduler
-  #   #   "
-  #   # depends_on:
-  #   #   - airflow-webserver
-  #   environment:
-  #     AIRFLOW__CORE__EXECUTOR: LocalExecutor
-  #     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
-  #     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
-  #   volumes:
-  #     - ../data:/opt/airflow/data
+#     command: >
+#       bash -c "
+#       airflow db migrate &&
+#       airflow db check &&
+#       airflow scheduler
+#       "
 
-  #   command: >
-  #     bash -c "
-  #     airflow db check &&
-  #     airflow scheduler
-  #     "
-  #   # command: >
-  #   #   bash -c "airflow scheduler"
+
+
+# services:
+#   postgres:
+#     image: postgres:15
+#     environment:
+#       POSTGRES_USER: airflow
+#       POSTGRES_PASSWORD: airflow
+#       POSTGRES_DB: airflow
+#     ports:
+#       - "5433:5432"
+#     healthcheck:
+#       test: ["CMD-SHELL", "pg_isready -U airflow -d airflow"]
+#       interval: 5s
+#       timeout: 5s
+#       retries: 20
+
+#   airflow-webserver:
+#     build:
+#       context: ..
+#       dockerfile: docker/Dockerfile.airflow
+#     depends_on:
+#       postgres:
+#         condition: service_healthy
+#     env_file:
+#       - ../.env
+#     environment:
+#       AIRFLOW__CORE__EXECUTOR: LocalExecutor
+#       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+#       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+#       TAVILY_API_KEY: ${TAVILY_API_KEY}
+#       FINNHUB_API_KEY: ${FINNHUB_API_KEY}
+#       TICKERS: ${TICKERS}
+#       ARTIFACT_ROOT: /opt/airflow/data
+#     volumes:
+#       - ../data:/opt/airflow/data
+#       - ../airflow/dags:/opt/airflow/dags
+#     ports:
+#       - "8080:8080"
+#     command: >
+#       bash -c "
+#       airflow db migrate &&
+#       airflow users create --username admin --firstname admin --lastname admin --role Admin --email admin@example.com --password admin || true &&
+#       airflow webserver
+#       "
+
+#   airflow-scheduler:
+#     build:
+#       context: ..
+#       dockerfile: docker/Dockerfile.airflow
+#     depends_on:
+#       postgres:
+#         condition: service_healthy
+#     env_file:
+#       - ../.env
+#     environment:
+#       AIRFLOW__CORE__EXECUTOR: LocalExecutor
+#       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+#       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+#       TAVILY_API_KEY: ${TAVILY_API_KEY}
+#       FINNHUB_API_KEY: ${FINNHUB_API_KEY}
+#       TICKERS: ${TICKERS}
+#       ARTIFACT_ROOT: /opt/airflow/data
+#     volumes:
+#       - ../data:/opt/airflow/data
+#       - ../airflow/dags:/opt/airflow/dags
+#     command: >
+#       bash -c "
+#       airflow db migrate &&
+#       airflow db check &&
+#       airflow scheduler
+#       "
+
+
+
 
 
 
@@ -104,27 +259,18 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    env_file:
+      - ../.env
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      ARTIFACT_ROOT: /opt/airflow/data
     volumes:
       - ../data:/opt/airflow/data
+      - ../airflow/dags:/opt/airflow/dags
     ports:
       - "8080:8080"
-    # command: >
-    #   bash -c "
-    #   airflow db init &&
-    #   airflow users create
-    #     --username admin
-    #     --firstname admin
-    #     --lastname admin
-    #     --role Admin
-    #     --email admin@example.com
-    #     --password admin || true
-    #   &&
-    #   airflow webserver
-      # "
     command: >
       bash -c "
       airflow db migrate &&
@@ -139,18 +285,16 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    env_file:
+      - ../.env
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      ARTIFACT_ROOT: /opt/airflow/data
     volumes:
       - ../data:/opt/airflow/data
-    # command: >
-    #   bash -c "
-    #   airflow db check &&
-    #   airflow scheduler
-    #   "
-
+      - ../airflow/dags:/opt/airflow/dags
     command: >
       bash -c "
       airflow db migrate &&

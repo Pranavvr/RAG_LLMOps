@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from typing import Any, Dict, Callable, List, Optional
-
+from pathlib import Path
 from config.settings import settings
 from data_access.snapshot_manager import SnapshotManager
 # from src.tools.fetch_news import search_news
@@ -13,7 +13,7 @@ LiveFetchFn = Callable[[str, Optional[int]], List[Dict[str, Any]]]
 
 class NewsStore:
     def __init__(self):
-        self.snapshots = SnapshotManager(settings.NEWS_SNAPSHOT_DIR)
+        self.snapshots = SnapshotManager(Path(settings.NEWS_SNAPSHOT_DIR))
 
     def get_news_bundle(self, query: str, max_results: int,
         live_fetch_fn: LiveFetchFn) -> Dict[str, Any]:

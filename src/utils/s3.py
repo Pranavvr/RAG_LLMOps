@@ -6,7 +6,7 @@ from typing import Optional
 
 import boto3
 
-from src.config.settings import settings
+from config.settings import settings
 
 
 @dataclass(frozen=True)

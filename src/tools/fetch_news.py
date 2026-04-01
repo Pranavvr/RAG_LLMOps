@@ -76,7 +76,7 @@ def _fetch_news_live(query: str, max_results: Optional[int] = None) -> List[Dict
 
 
 
-def fetch_news(query: str, max_results: Optional[int] = None) -> List[Dict[str, Any]]:
+def fetch_news(query: str, max_results: Optional[int] = None) -> Dict[str, Any]:
     max_results = max_results or settings.NEWS_MAX_RESULTS
 
     return _news_store.get_news_bundle(
